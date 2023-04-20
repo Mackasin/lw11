@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view>
+    <h:head>
+
+        <link rel="stylesheet" type="text/css" href="styles.css"/>
+    </h:head>
+
+    <h:body>
+
+        <div class="wrapper">
+
+            <div class="inputForm">
+
+                <h:form id="addForm">
+
+                    <h:messages id="errorMessages" style="color:red;margin:8px;"/>
+                    <p:outputLabel value="Номер квартири" for="numberOfApartment"/>
+                    <br></br>
+                    <p:inputText id="numberOfApartment" required="true" type="number"
+                                 value="#{houseBean.house.numberOfApartment}"/>
+
+                    <br></br>
+                    <p:outputLabel value="Площа" for="square"/>
+                    <br></br>
+                    <p:inputText id="square" required="true" type="float" value="#{houseBean.house.square}"/>
+
+                    <br></br>
+                    <p:outputLabel value="Поверх" for="floor"/>
+                    <br></br>
+                    <p:inputText id="floor" required="true" type="number" value="#{houseBean.house.floor}"/>
+
+                    <br></br>
+                    <p:outputLabel value="Кількість кімнат" for="numberOfRooms"/>
+                    <br></br>
+                    <p:inputText id="numberOfRooms" required="true" type="number"
+                                 value="#{houseBean.house.numberOfRooms}"/>
+
+                    <br></br>
+                    <p:outputLabel value="Вулиця" for="street"/>
+
+                    <br></br>
+                    <p:inputText id="street" required="true" value="#{houseBean.house.street}"/>
+
+                    <br></br>
+                    <br></br>
+                    <p:commandButton value="Додати" ajax="false" action="#{houseBean.add()}"/>
+
+                </h:form>
+
+            </div>
+
+            <br></br>
+
+            <div class="card">
+
+                <p:linkButton outcome="findByNumberOfRoomsByFloors" value="Список квартир за кількістью кімнат які знаходятся між поверхами" style="margin:10px;">
+                </p:linkButton>
+                <p:linkButton outcome="filterBySquare" value="Пошук за площею" style="margin:10px;">
+                </p:linkButton>
+                <p:linkButton outcome="sortBySquare" value="Сортирування квартир по площі" style="margin:10px;">
+                </p:linkButton>
+                <p:linkButton outcome="listFloors" value="Список поверхів" style="margin:10px;">
+                </p:linkButton>
+                <p:linkButton outcome="findByNumberOfRooms" value="Список квартир с заданими квартирами" style="margin:10px;">
+                </p:linkButton>
+                <p:linkButton outcome="mapFloor" value="Список квартир кожного поверху" style="margin:10px;">
+                </p:linkButton>
+
+            </div>
+
+            <br></br>
+            <p:dataTable value="#{houseBean.findAll()}" var="p"
+                         stripedRows="true" id="houseTable">
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{p.id}"/>
+                </p:column>
+
+                <p:column headerText="Номер квартири">
+                    <h:outputText value="#{p.numberOfApartment}"/>
+                </p:column>
+
+                <p:column headerText="Площа">
+                    <h:outputText value="#{p.square}"/>
+                </p:column>
+
+                <p:column headerText="Поверх">
+                    <h:outputText value="#{p.floor}"/>
+                </p:column>
+
+                <p:column headerText="Кількість кімнат">
+                    <h:outputText value="#{p.numberOfRooms}"/>
+                </p:column>
+
+                <p:column headerText="Вулиця">
+                    <h:outputText value="#{p.street}"/>
+                </p:column>
+
+                <p:column headerText="Дія">
+                    <p:commandButton action="#{houseBean.delete(p.id)}"
+                                     update="houseTable" process="@this" icon="pi pi-times"
+                                     styleClass="rounded-button ui-button-danger ui-button-flat"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+
+
+    </h:body>
+
+</f:view>
+</html>
